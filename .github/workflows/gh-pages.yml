@@ -2,7 +2,7 @@ name: GitHub Pages
 
 env:
   CARGO_TERM_COLOR: always
-  DIOXUS_VERSION: 0.7.2
+  DIOXUS_VERSION: 0.7.9
 
 on:
   push:
@@ -31,8 +31,11 @@ jobs:
 
       - uses: Swatinem/rust-cache@c19371144df3bb44fab255c43d04cbc2ab54d1c4 # v2
 
+      - name: Install cargo-binstall
+        uses: cargo-bins/cargo-binstall@30b5ca8b54e1dcffd9548bc87ede1531310fdc67 # v1.20.0
+
       - name: Install Dioxus
-        run: cargo install --locked dioxus-cli@${{ env.DIOXUS_VERSION }}
+        run: cargo binstall --no-confirm --force dioxus-cli@${{ env.DIOXUS_VERSION }}
 
       - name: Build app
         run: dx bundle --release
